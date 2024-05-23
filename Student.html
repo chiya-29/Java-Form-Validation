@@ -1,0 +1,96 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    </head>
+    <title>Student Registration Form</title>
+    <style>.error { color: red; }
+    </style>
+    <body>
+        <h2>Student Registration Form</h2>
+        <form id="registrationForm" onsubmit="return validateForm()">
+            <label for="name">Name*:</label>
+            <input type="text" id="name" name="name" maxlength="30" required> <span class="error" id="nameError"></span><br><br>
+            
+            <label for="registerNumber">Register Number*:</label>
+            <input type="text" id="registerNumber" name="registerNumber" required> <span class="error" id="registerNumberError"></span><br><br>
+            
+            <label for="dob">Date of Birth:</label>
+            <input type="date" id="dob" name="dob"><br><br>
+            
+            <label for="program">Program:</label>
+            <input type="text" id="program" name="program"><br><br>
+        
+            <label for="email">Email*:</label>
+            <input type="email" id="email" name="email" required> <span class="error" id="emailError"></span><br><br>
+        
+            <label for="temporaryAddress">Temporary Address:</label>
+            <textarea id="temporaryAddress" name="temporaryAddress" rows="4" cols="50"></textarea><br><br>
+        
+            <label for="permanentAddress">Permanent Address:</label>
+            <textarea id="permanentAddress" name="permanentAddress" rows="4" cols="50"></textarea><br><br>
+        
+            <label for="phoneNumber">Phone Number*:</label>
+            <input type="tel" id="phoneNumber" name="phoneNumber" required> <span class="error" id="phoneNumberError"></span><br><br>
+        
+            <input type="checkbox" id="sameAddress" onclick="copyAddress()"> Permanent address is same as temporary address<br><br>
+            
+            <input type="submit" value="Submit">
+        </form>
+        <script>
+            function validateForm() {
+                let isValid = true;
+                const name = document.getElementById('name').value;
+                const registerNumber = document.getElementById('registerNumber').value;
+                const email = document.getElementById('email').value;
+                const temporaryAddress = document.getElementById('temporaryAddress').value;
+                const permanentAddress = document.getElementById('permanentAddress').value;
+                const phoneNumber = document.getElementById('phoneNumber').value;
+        
+                // Resetting error messages
+                document.getElementById('nameError').textContent = "";
+                document.getElementById('registerNumberError').textContent = "";
+                document.getElementById('emailError').textContent = "";
+                document.getElementById('phoneNumberError').textContent = "";
+        
+           
+                if (!/^[a-zA-Z]+$/.test(name) || name.length > 30) {
+                    document.getElementById('nameError').textContent = "Name should only contain alphabets and be less than or equal to 30 characters";
+                    isValid = false;
+                }
+        
+          
+                if (!/^[a-zA-Z0-9]+$/.test(registerNumber)) {
+                    document.getElementById('registerNumberError').textContent = "Register number should only contain alphabets and numbers";
+                    isValid = false;
+                }
+        
+               
+                if (!/^\S+@\S+\.\S+$/.test(email)) {
+                    document.getElementById('emailError').textContent = "Invalid email address";
+                    isValid = false;
+                }
+        
+                
+                if (!/^\d{10}$/.test(phoneNumber)) {
+                    document.getElementById('phoneNumberError').textContent = "Phone number should be exactly 10 digits";
+                    isValid = false;
+                }
+        
+                return isValid;
+            }
+        
+            function copyAddress() {
+                const temporaryAddress = document.getElementById('temporaryAddress').value;
+                if (document.getElementById('sameAddress').checked) {
+                    document.getElementById('permanentAddress').value = temporaryAddress;
+                    document.getElementById('permanentAddress').disabled = true;
+                } else {
+                    document.getElementById('permanentAddress').value = "";
+                    document.getElementById('permanentAddress').disabled = false;
+                }
+            }
+        </script>        
+    </body>
+</html>

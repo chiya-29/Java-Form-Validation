@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html lang="en">
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Credit Card Validation</title>
+    <style>
+        .error { color: red; }
+    </style>
+    <body>
+        <h2>Credit Card Validation</h2>
+        <form id="creditCardForm" onsubmit="return validateCreditCard()">
+            <label for="cardNumber">Credit Card Number:</label>
+            <input type="text" id="cardNumber" name="cardNumber" required> <span class="error" id="cardNumberError"></span><br><br>
+            
+            <input type="submit" value="Validate">
+        </form>
+        
+        <script>
+            function validateCreditCard() {
+                const cardNumber = document.getElementById('cardNumber').value;
+                const cardType = detectCardType(cardNumber);
+        
+
+                if (cardType !== "Invalid card number") {
+                    alert("Card Type: " + cardType);
+                    return true;
+                } else {
+                    document.getElementById('cardNumberError').textContent = "Invalid card number";
+                    return false;
+                }
+            }
+        
+            function detectCardType(cardNumber) {
+                cardNumber = cardNumber.replace(/\D/g, '');
+        
+                const amexPattern = /^3[47]\d{13}$/;
+                const mastercardPattern = /^5[1-5]\d{14}$/;
+                const visaPattern = /^4(\d{12}|\d{15})$/;
+                const discoverPattern = /^6011\d{12}$/;
+                const dinersClubPattern = /^3(0[0-5]|[68]\d)\d{11}$/;
+        
+                
+                if (amexPattern.test(cardNumber)) {
+                    return "American Express";
+                } else if (mastercardPattern.test(cardNumber)) {
+                    return "Master Card";
+                } else if (visaPattern.test(cardNumber)) {
+                    return "VISA";
+                } else if (discoverPattern.test(cardNumber)) {
+                    return "Discover";
+                } else if (dinersClubPattern.test(cardNumber)) {
+                    return "Diners Club";
+                } else {
+                    return "Invalid card number";
+                }
+            }
+        </script>
+    </body>
+</html>
